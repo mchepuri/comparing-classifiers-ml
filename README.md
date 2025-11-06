@@ -1,79 +1,80 @@
-**README** — Practical Application III: Comparing Classifiers (Bank Marketing Dataset)
-Overview
+# 🧠 Practical Application III: Comparing Classifiers — Bank Marketing Campaign Analysis
 
-This notebook applies the CRISP-DM (Cross Industry Standard Process for Data Mining) framework to evaluate multiple classification algorithms for predicting term deposit subscriptions using the Bank Marketing dataset from the UCI Machine Learning Repository.
+##  Overview
+This project applies the **CRISP-DM (Cross Industry Standard Process for Data Mining)** framework to analyze and model the **Bank Marketing dataset** from the UCI Machine Learning Repository.  
 
-The project’s primary business objective is to improve the efficiency and effectiveness of the bank’s telemarketing campaigns by identifying customers who are most likely to subscribe to a term deposit.
-xploratory Data Analysis Highlights
+The **business objective** is to **improve the efficiency and effectiveness** of the bank’s telemarketing campaigns by identifying customers who are most likely to subscribe to a term deposit.  
 
-Key Charts Included:
-
-Target Distribution — majority of customers did not subscribe (y='no' ≈ 88%).
-
-sns.countplot(x='y', data=df)
-plt.title('Target Variable Distribution (Term Deposit Subscription)')
+We compare and evaluate multiple machine learning algorithms — **Logistic Regression, K-Nearest Neighbors (KNN), Decision Trees, and Support Vector Machines (SVM)** — to determine the best performing model.
 
 
-Subscription Rate by Job Type — jobs in management, admin, and students showed higher subscription probabilities.
+## Exploratory Data Analysis (EDA)
 
-Education vs. Subscription Rate — higher education levels correlate with higher likelihood to subscribe.
+**Key Findings:**
+- Target variable (`y`) is highly imbalanced — only ~11% of clients subscribed.  
+- Features such as **job**, **education**, and **housing loan** have strong influence on subscription likelihood.  
 
-Correlation Matrix (Numeric Features) — shows no extreme multicollinearity among numeric variables.
+###  Target Distribution
+![Target Variable Distribution](charts/target_distribution.png)
 
-Baseline Model
+### Subscription Rate by Job Type
+![Subscription by Job Type](charts/subscription_by_job.png)
 
-Before training any models, a baseline predictor that always predicts the majority class ("no") was established.
+### Education vs Subscription Rate
+![Education Impact](charts/education_subscription.png)
 
-Baseline Accuracy: ≈ 88.7%
+### Correlation Matrix
+![Correlation Matrix](charts/correlation_matrix.png)
 
-This sets the benchmark every classifier must outperform.
+---
 
-Models Implemented and Compared
-Model	Train Time (s)	Train Accuracy	Test Accuracy
-Logistic Regression	~0.2	0.89	0.90
-K-Nearest Neighbors	~0.8	0.94	0.87
-Decision Tree	~0.05	1.00	0.88
-Support Vector Machine	~2.1	0.91	0.89
+##  Baseline Model
 
-Interpretation:
+Before using any algorithm, we established a simple **baseline model** that always predicts the **majority class (“no”)**.
 
-Logistic Regression achieved the most balanced performance between training and testing accuracy.
+| Metric | Value |
+|---------|--------|
+| **Majority Class** | No |
+| **Baseline Accuracy** | **≈ 88.7%** |
 
-Decision Tree and KNN showed mild overfitting.
+This serves as the minimum accuracy our models should outperform.
 
-SVM performed well but had higher computation time.
+---
 
-🔍 Model Optimization
+## Models Implemented
 
-A GridSearchCV pipeline was built to tune Logistic Regression hyperparameters, including:
+Four classifiers were trained and evaluated using default hyperparameters:
 
-Regularization strength (C)
+| Model | Train Time (s) | Train Accuracy | Test Accuracy |
+|--------|----------------|----------------|----------------|
+| **Logistic Regression** | ~0.2 | 0.89 | **0.90** |
+| **K-Nearest Neighbors (KNN)** | ~0.8 | 0.94 | 0.87 |
+| **Decision Tree** | ~0.05 | **1.00** | 0.88 |
+| **Support Vector Machine (SVM)** | ~2.1 | 0.91 | 0.89 |
 
-Feature selection (SelectKBest)
+**Insights:**
+- Logistic Regression delivered the **most balanced** performance.  
+- KNN and Decision Tree slightly overfit the training data.  
+- SVM achieved good performance but required longer training time.
 
-Solver and penalty types
+---
 
-Best Parameters Found:
+## 🔍 Model Optimization (GridSearchCV + Feature Selection)
 
-{'select__k': 15, 'model__C': 1, 'model__penalty': 'l2', 'model__solver': 'lbfgs'}
+A **pipeline** was built combining preprocessing, feature selection, and Logistic Regression, followed by **GridSearchCV** for hyperparameter tuning.
 
+```python
+pipe = Pipeline([
+    ('preprocess', preprocessor),
+    ('select', SelectKBest(score_func=f_classif)),
+    ('model', LogisticRegression(max_iter=1000))
+])
 
-Performance After Tuning:
+param_grid = {
+    'select__k': [10, 15, 20, 'all'],
+    'model__C': [0.01, 0.1, 1, 10],
+    'model__penalty': ['l2'],
+    'model__solver': ['lbfgs']
+}
 
-Cross-Validation Accuracy: ~0.91
-
-Test Accuracy: ~0.91
-
-This demonstrates a modest improvement while maintaining generalization.
-
-Feature Engineering
-
-Combine social and economic indicators (e.g., euribor3m trends, employment rates) for richer feature sets.
-
-Create interaction features (e.g., job × education).
-
-Modeling Enhancements
-
-Apply ensemble methods (Random Forests, Gradient Boosting, XGBoost) for potentially higher predictive power.
-
-Consider SMOTE or other resampling to address class imbalance.
+grid = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
