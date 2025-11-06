@@ -15,16 +15,20 @@ We compare and evaluate multiple machine learning algorithms — **Logistic Regr
 - Features such as **job**, **education**, and **housing loan** have strong influence on subscription likelihood.  
 
 ###  Target Distribution
-![Target Variable Distribution](charts/target_distribution.png)
+<img width="1440" height="928" alt="image" src="https://github.com/user-attachments/assets/2affc079-dd47-4005-a022-c78346fc3400" />
+
 
 ### Subscription Rate by Job Type
-![Subscription by Job Type](charts/subscription_by_job.png)
+<img width="1798" height="1100" alt="image" src="https://github.com/user-attachments/assets/6f820147-f3e7-4903-8f84-eaa4a344f77e" />
+
 
 ### Education vs Subscription Rate
-![Education Impact](charts/education_subscription.png)
+<img width="1166" height="972" alt="image" src="https://github.com/user-attachments/assets/0928d0f5-2cef-4412-92b0-6807540e42d7" />
+
 
 ### Correlation Matrix
-![Correlation Matrix](charts/correlation_matrix.png)
+<img width="1386" height="1074" alt="image" src="https://github.com/user-attachments/assets/f3503449-9e6f-43ce-b15f-e9382f34a118" />
+
 
 ---
 
