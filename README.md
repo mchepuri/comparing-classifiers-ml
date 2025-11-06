@@ -1,4 +1,4 @@
-README — Practical Application III: Comparing Classifiers (Bank Marketing Dataset)
+**README** — Practical Application III: Comparing Classifiers (Bank Marketing Dataset)
 Overview
 
 This notebook applies the CRISP-DM (Cross Industry Standard Process for Data Mining) framework to evaluate multiple classification algorithms for predicting term deposit subscriptions using the Bank Marketing dataset from the UCI Machine Learning Repository.
