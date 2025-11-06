@@ -77,9 +77,11 @@ param_grid = {
     'model__solver': ['lbfgs']
 }
 
-grid = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy', n_jobs=-1)```
+grid = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+```
 
-Summary of Outcomes
+## Summary of Outcomes
+
 Step	Key Insight
 EDA	Majority class “no” dominates; job, education, and housing loan influence subscription.
 Baseline	88.7% accuracy (always predicting “no”).
@@ -88,13 +90,13 @@ Tuning	GridSearchCV improved model generalization and simplified feature set.
 Top Predictors	Job type, education level, housing loan, and age.
 
 ## Next Steps
-🔹 1. Feature Engineering
+ 1. Feature Engineering
 
 Combine economic indicators (e.g., euribor3m, employment rate trends).
 
 Create interaction terms between demographics and financial attributes.
 
-🔹 2. Advanced Modeling
+ 2. Advanced Modeling
 
 Test ensemble models (Random Forest, Gradient Boosting, XGBoost).
 
