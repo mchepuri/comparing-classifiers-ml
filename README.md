@@ -59,7 +59,7 @@ Four classifiers were trained and evaluated using default hyperparameters:
 
 ---
 
-## 🔍 Model Optimization (GridSearchCV + Feature Selection)
+## Model Optimization (GridSearchCV + Feature Selection)
 
 A **pipeline** was built combining preprocessing, feature selection, and Logistic Regression, followed by **GridSearchCV** for hyperparameter tuning.
 
@@ -77,4 +77,25 @@ param_grid = {
     'model__solver': ['lbfgs']
 }
 
-grid = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+grid = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy', n_jobs=-1)```
+
+Summary of Outcomes
+Step	Key Insight
+EDA	Majority class “no” dominates; job, education, and housing loan influence subscription.
+Baseline	88.7% accuracy (always predicting “no”).
+Model Comparison	Logistic Regression achieved the best test performance (~0.90–0.91).
+Tuning	GridSearchCV improved model generalization and simplified feature set.
+Top Predictors	Job type, education level, housing loan, and age.
+
+## Next Steps
+🔹 1. Feature Engineering
+
+Combine economic indicators (e.g., euribor3m, employment rate trends).
+
+Create interaction terms between demographics and financial attributes.
+
+🔹 2. Advanced Modeling
+
+Test ensemble models (Random Forest, Gradient Boosting, XGBoost).
+
+Handle class imbalance using SMOTE or weighted loss functions.
